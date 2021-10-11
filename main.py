@@ -1,10 +1,12 @@
 from shutil import copy
-from os import listdir, mkdir
+from os import listdir, mkdir, rename
 from os.path import isfile, join
 
 origin_path = 'C:\\Users\\biran\\Desktop\\sub'
-destination_path = 'C:\\Users\\biran\\Desktop\\submitted'
+destination_path = 'G:\\Shared drives\\IR2021_2022_Staff\\Assignments\\IR2021_2022\\submitted'
+# destination_path = 'C:\\Users\\biran\\Desktop\\submitted'
 assignment_num = ''
+assignment_name = "assignment_" + assignment_num
 
 
 def folder_reader():
@@ -27,7 +29,7 @@ def folder_reader():
                 pass
 
             # Creates a new path for the current job according to the student's ID
-            student_id_path = join(student_id_path, "assignment_" + assignment_num)
+            student_id_path = join(student_id_path, assignment_name)
 
             # If the student does not have a folder for the current job it is more for him
             try:
@@ -36,7 +38,9 @@ def folder_reader():
                 pass
 
             # Copies the student submission file to the newly created folder
+
             copy(join(origin_path, f), student_id_path)
+            rename(join(student_id_path, f), join(student_id_path, assignment_name+".ipynb"))
 
 
 def main():
@@ -44,9 +48,9 @@ def main():
     global assignment_num
     global origin_path
     global destination_path
-
+    global assignment_name
     assignment_num = input("Please enter assignment number:\n")
-
+    assignment_name = "assignment_" + assignment_num
     origin_flag = input("Would you like to update the origin path[y/n]\n")
     if origin_flag.lower() == 'y':
         origin_path = input("Please enter new origin path\n")
